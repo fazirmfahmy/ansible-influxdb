@@ -1,0 +1,28 @@
+---
+- name: "Verify if InfluxDB repository is already configured."
+  stat:
+    path: "{{ repository_file_path }}"
+  register: repository_file_result
+
+- name: "Configure InfluxDB repository."
+  template:
+    src: "{{ repository_file_template }}"
+    dest: "{{ repository_file_path }}/{{ repository_file_name }}"
+  register: repository_configuration_result
+  when: not repository_file_result.stat.exists
+
+- name: "Disable InfluxDB repository."
+  ini_file:
+    dest: "{{ repository_file_path }}/{{ repository_file_name }}"
+    section: "{{ item }}"
+    option: enabled
+    value: "{{ repository_enable_status }}"
+  with_items:
+     - influxdb
+  when: repository_configuration_result is succeeded
+
+- name: "Configure InfluxDB repository GPG key."
+  rpm_key:
+    key: "{{ repository_gpg_key_url }}"
+    state: present
+  when: not repository_file_result.stat.exists

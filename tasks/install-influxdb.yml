@@ -1,0 +1,13 @@
+---
+- name: "Install InfluxDB server "
+  yum:
+    name: influxdb
+    enablerepo: influxdb
+    state: present
+  notify:
+    restart influxdb
+  become: yes
+
+- name: "Start and enable InfluxDB server"
+  service: name=influxdb state=started enabled=yes
+  become: yes

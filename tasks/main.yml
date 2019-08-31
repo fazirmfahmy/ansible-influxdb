@@ -1,0 +1,8 @@
+---
+- name: "Configure InfluxDB repository."
+  import_tasks: configure-repository.yml
+  when: repository_configuration_status
+
+- name: "Install InfluxDB Server."
+  import_tasks: install-influxdb.yml
+  when: server_install_status

@@ -1,0 +1,14 @@
+---
+server_install_status: true
+repository_configuration_status: true
+
+repository_file_template: "influxdb.repo.j2"
+repository_file_path: "/etc/yum.repos.d"
+repository_id: "influxdb"
+repository_name: "InfluxDB Repository - \$releasever"
+repository_url: "https://repos.influxdata.com/rhel/\$releasever/\$basearch/stable"
+repository_enable_status: 0
+repository_gpg_key_url: "https://repos.influxdata.com/influxdb.key"
+repository_gpg_key_enable_status: 1
+repository_ssl_ca_cert_file_path: ""
+repository_ssl_verification_status: 0
